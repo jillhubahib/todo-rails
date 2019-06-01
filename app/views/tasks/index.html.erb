@@ -1,0 +1,29 @@
+<%= form_tag("/tasks") do %>
+  <%= search_field(:task, :name, placeholder: "Add a task", class: "form-control", autofocus: true) %>
+<% end %>
+
+<div class="btn-group btn-group-toggle mt-3 mb-3 task-filter">
+  <% Task::VALID_FILTER.each do |task_filter| %>
+    <%= link_to task_filter.capitalize, filtered_tasks_path(task_filter), class: "btn btn-secondary #{show_active(task_filter, @filter)}" %>
+  <% end %>
+</div>
+
+<% unless @tasks.empty? %>
+  <div>
+    <ul class="list-group list-group-flush">
+      <% @tasks.each do |task| %>
+        <li class="list-group-item task-item <%= show_complete_by(task.completed_at.presence, @filter) %>">
+          <span class="task-name" data-value="<%= task.id %>"> <%= task.name %> </span>
+        </li>
+      <% end %>
+    </ul>
+
+    <% if @filter == 'completed' %>
+      <button type="button" class="btn btn-outline-danger btn-sm mt-2 task-item-delete-all">Delete All Items</button>
+    <% else %>
+      <div class="alert alert-dark" role="alert">
+        <span class="font-weight-bold task-active-counter"><%= @active_count %></span> item/s left.
+      </div>
+    <% end %>
+  </div>
+<% end %>
