@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TodoRails</title>
+    <title>Todo in Rails</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload', async: true  %>
+
+    <meta name="turbolinks-root">
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/nav' %>
+
+    <main role="main" class="container">
+
+      <div class="starter-template">
+
+        <div class="row justify-content-md-center">
+          <div class="col-6">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+
+    </main><!-- /.container -->
   </body>
 </html>
