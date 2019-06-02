@@ -25,4 +25,18 @@ RSpec.describe TasksController, type: :controller do
     end
   end
 
+  describe "PUT #update" do
+    it "toggles task to complete" do
+      put :update, params: { id: task.id, task: { completed_at: task.completed_at } }
+
+      expect(response).to have_http_status(:success)
+      expect(task.reload.completed_at).to be_nil
+
+      put :update, params: { id: task.id, task: { completed_at: nil } }
+
+      expect(response).to have_http_status(:success)
+      expect(task.reload.completed_at).not_to be_nil
+    end
+  end
+
 end

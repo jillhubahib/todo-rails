@@ -14,13 +14,29 @@
  *= require_self
  */
 
-@import "bootstrap";
+ @import 'bootstrap';
 
-body {
+ body {
   padding-top: 5rem;
 }
 
 .starter-template {
   padding: 3rem 1.5rem;
   text-align: center;
+}
+
+.task-filter {
+  a { text-decoration: none; }
+}
+
+.task-item {
+  .task-name {
+    cursor: pointer;
+  }
+
+  &.completed {
+    .task-name {
+      text-decoration: line-through;
+    }
+  }
 }

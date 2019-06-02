@@ -18,6 +18,20 @@ class TasksController < ApplicationController
     redirect_to root_path
   end
 
+  def update
+    task = current_user.tasks.find(params[:id])
+
+    updated_attributes = task_params.to_h
+    if task_params[:completed_at]
+      completed_at = task.completed_at.nil? ? Time.current : nil
+      updated_attributes[:completed_at] = completed_at
+    end
+
+    render json: task if task.update(updated_attributes)
+  rescue ::ActiveRecord::RecordNotFound => e
+    render json: { error: e.message }, status: :not_found
+  end
+
   private
 
   def filter
