@@ -1,3 +1,14 @@
+function deleteTask(idOrAll) {
+  $.ajax({
+      method: "DELETE",
+      headers: { 'X-CSRF-Token': Rails.csrfToken() },
+      url: "/tasks/" + idOrAll
+    })
+    	.done(function() {
+    		window.location = "/";
+    	});
+}
+
 function updateTaskCounter(incrementOrDecrement) {
   currentValue = parseInt($('.task-active-counter').html());
   if (incrementOrDecrement === 'increment') {
@@ -29,6 +40,20 @@ function onLoadEvents() {
           updateTaskCounter('decrement');
         }
       });
+  });
+
+  $('.task-item-delete').click(function() {
+    $('.task-item-delete-confirmation').attr("data-value", $(this).attr('data-value'));
+    $('.task-modal').modal('show');
+  });
+
+  $('.task-item-delete-confirmation').click(function() {
+    deleteTask($(this).attr('data-value'));
+  });
+
+  $('.task-item-delete-all').click(function() {
+    $('.task-item-delete-confirmation').attr("data-value", 'all');
+    $('.task-modal').modal('show');
   });
 }
 

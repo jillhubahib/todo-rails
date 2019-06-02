@@ -32,6 +32,19 @@ class TasksController < ApplicationController
     render json: { error: e.message }, status: :not_found
   end
 
+  def destroy
+    if params[:id] == 'all' && current_user.tasks.completed.destroy_all
+      return render json: {}, status: :ok
+    end
+
+    task = current_user.tasks.find(params[:id])
+    if task && task.destroy
+      render json: task
+    else
+      render json: { error: task.errors.full_messages }, status: :not_found
+    end
+  end
+
   private
 
   def filter

@@ -39,4 +39,12 @@ RSpec.describe TasksController, type: :controller do
     end
   end
 
+  describe "DELETE #destroy" do
+    it "returns http success" do
+      delete :destroy, params: { id: task.id }
+
+      expect(response).to have_http_status(:success)
+      expect(Task.find_by(id: task.id)).to be_nil
+    end
+  end
 end

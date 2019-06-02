@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get 'tasks/:filter', to: "tasks#index", as: 'filtered_tasks'
 
-  resources :tasks, only: [:create, :update]
+  resources :tasks, only: [:create, :update, :destroy]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'tasks#index'
