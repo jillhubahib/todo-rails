@@ -16,4 +16,13 @@ RSpec.describe TasksController, type: :controller do
     end
   end
 
+  describe "POST #create" do
+    it "creates a task and redirect back to root path" do
+      task = FactoryBot.build(:task)
+
+      expect(post :create, params: { task: { name: task.name } }).to redirect_to root_path
+      expect(Task.find_by(name: task.name)).not_to be_nil
+    end
+  end
+
 end

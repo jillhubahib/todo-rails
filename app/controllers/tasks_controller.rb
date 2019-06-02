@@ -6,6 +6,18 @@ class TasksController < ApplicationController
     @active_count = Task.active.size
   end
 
+  def create
+    task = current_user.tasks.build(task_params)
+
+    if task.save
+      flash[:notice] = "Task '#{task.name}' successfully created"
+    else
+      flash[:alert] = task.error.full_messages
+    end
+
+    redirect_to root_path
+  end
+
   private
 
   def filter
@@ -18,5 +30,9 @@ class TasksController < ApplicationController
     else
       Task.all
     end
+  end
+
+  def task_params
+    params.require(:task).permit(:name, :completed_at)
   end
 end
