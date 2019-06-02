@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: todo-rails_production
-  username: todo-rails
-  password: <%= ENV['TODO-RAILS_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
